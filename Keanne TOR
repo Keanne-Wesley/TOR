@@ -1,0 +1,57 @@
+// Define the Course class
+data class Course(
+    val courseName: String,
+    val grade: Double // 1.00 is highest, 5.00 is failing
+)
+
+// Define the Transcript class
+class Transcript(val studentName: String) {
+    private val courses = mutableListOf<Course>()
+
+    // Method to add a course to the transcript
+    fun addCourse(courseName: String, grade: Double) {
+        courses.add(Course(courseName, grade))
+    }
+
+    // Method to calculate GPA
+    fun calculateGPA(): Double {
+        var totalGrades = 0.0
+
+        for (course in courses) {
+            totalGrades += course.grade
+        }
+
+        return if (courses.isNotEmpty()) totalGrades / courses.size else 0.0
+    }
+
+    // Method to display the transcript
+    fun displayTranscript() {
+        println("Transcript for $studentName")
+        println("---------------------------------------------------")
+        println("Course\t\t\t\tGrade")
+        println("---------------------------------------------------")
+        
+        for (course in courses) {
+            println("${course.courseName}\t\t${"%.2f".format(course.grade)}")
+        }
+
+        println("---------------------------------------------------")
+        println("GPA: ${"%.2f".format(calculateGPA())}")
+    }
+}
+
+fun main() {
+    // Create a new Transcript for the student
+    val transcript = Transcript("John Doe")
+
+    // Add courses and grades
+    transcript.addCourse("College Logic and Math", 1.00)
+    transcript.addCourse("Language and Communication", 1.25)
+    transcript.addCourse("Philippine Popular Culture", 1.50)
+    transcript.addCourse("Understanding The Self", 1.00)
+    transcript.addCourse("PE", 2.00)
+    transcript.addCourse("The Contemporary World", 2.25)
+
+    // Display the transcript
+    transcript.displayTranscript()
+}
